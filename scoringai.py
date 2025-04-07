@@ -1,8 +1,10 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import openai
 import os
 
 app = Flask(__name__)
+CORS(app)  # Enable CORS for all routes
 
 # Load your OpenAI API key (set this as an environment variable for security)
 openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -27,7 +29,7 @@ def generate_prompt(email_text):
 def analyze_email():
     data = request.json
     email_text = data.get("email")
-    
+
     if not email_text:
         return jsonify({"error": "Email text is required"}), 400
 
